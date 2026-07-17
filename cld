@@ -1,0 +1,10 @@
+[33mcommit a5fc1ad4eddb1536e15fd63407c5e7bce7c4c460[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackend[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/backend[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: Onatade Adeyincka Abdulmajeed <onatadeabdulmajeed@gmail.com>
+Date:   Fri Jul 17 13:32:44 2026 +0100
+
+    fix(build): remove broken maven-compiler-plugin override, add OpenAPI docs
+    
+    - Removed explicit maven-compiler-plugin execution config for Lombok
+      annotation processing, which was causing IDE plugin resolution
+      failures ("Plugin ... not found")
+    - Added springdoc-openapi-starter-webmvc-ui dependency for API docs
