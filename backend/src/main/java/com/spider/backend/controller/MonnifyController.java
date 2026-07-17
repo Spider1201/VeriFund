@@ -1,10 +1,10 @@
 package com.spider.backend.controller;
 
+import com.spider.backend.dto.InitializePaymentRequest;
+import com.spider.backend.dto.InitializePaymentResponse;
 import com.spider.backend.dto.MonnifyTokenResponse;
 import com.spider.backend.service.MonnifyService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/monnify")
@@ -19,5 +19,13 @@ public class MonnifyController {
     @GetMapping("/token")
     public MonnifyTokenResponse getToken() {
         return monnifyService.getAccessToken();
+    }
+
+    @PostMapping("/initialize")
+    public InitializePaymentResponse initializePayment(
+            @RequestBody InitializePaymentRequest request){
+
+        return monnifyService.initializePayment(request);
+
     }
 }
