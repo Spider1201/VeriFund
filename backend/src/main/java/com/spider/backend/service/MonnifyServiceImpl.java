@@ -1,6 +1,7 @@
 package com.spider.backend.service;
 
-import com.spider.backend.dto.MonnifyTokenResponse;
+import com.spider.backend.dto.*;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpHeaders;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+
+import java.util.List;
 @Service
 public class MonnifyServiceImpl implements MonnifyService {
 
@@ -46,5 +49,58 @@ public class MonnifyServiceImpl implements MonnifyService {
                 .retrieve()
                 .bodyToMono(MonnifyTokenResponse.class)
                 .block();
+    }
+
+    @Override
+    public InitializePaymentResponse initializePayment(InitializePaymentRequest request) {
+        String paymentReference = "VF-" + System.currentTimeMillis();
+
+        MonnifyInitializeRequest monnifyRequest = new MonnifyInitializeRequest();
+
+        MonnifyTokenResponse tokenResponse = getAccessToken();
+
+        String accessToken = tokenResponse
+                .getResponseBody()
+                .getAccessToken();
+
+        monnifyRequest.setAmount(request.getAmount());
+        monnifyRequest.setCustomerName(request.getDonorName());
+        monnifyRequest.setCustomerEmail(request.getDonorEmail());
+        monnifyRequest.setPaymentReference(paymentReference);
+        monnifyRequest.setPaymentDescription("Donation");
+        monnifyRequest.setCurrencyCode("NGN");
+        monnifyRequest.setContractCode(contractCode);
+        monnifyRequest.setRedirectUrl("http://localhost:5173/payment-success");
+
+        monnifyRequest.setPaymentMethods(
+                List.of("CARD", "ACCOUNT_TRANSFER"));
+
+        MonnifyInitializeResponse response = webClient
+                .post()
+                .uri(baseUrl + "/api/v1/merchant/transactions/init-transaction")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(monnifyRequest)
+                .retrieve()
+                .bodyToMono(MonnifyInitializeResponse.class)
+                .block();
+
+        InitializePaymentResponse paymentResponse = new InitializePaymentResponse();
+
+        paymentResponse.setCheckoutUrl(
+                response.getResponseBody().getCheckoutUrl());
+
+        paymentResponse.setPaymentReference(
+                response.getResponseBody().getPaymentReference());
+
+        paymentResponse.setTransactionReference(
+                response.getResponseBody().getTransactionReference());
+
+        return paymentResponse;
+    }
+
+    @Override
+    public VerifyPaymentResponse verifyPayment(String transactionReference) {
+        return null;
     }
 }
