@@ -3,6 +3,7 @@ package com.spider.backend.service;
 import com.spider.backend.dto.CampaignResponse;
 import com.spider.backend.dto.CreateCampaignRequest;
 import com.spider.backend.model.Campaign;
+import com.spider.backend.model.CampaignStatus;
 import com.spider.backend.repository.CampaignRepository;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,7 @@ public class CampaignServiceImpl implements CampaignService {
                 .supportingDocuments(request.getSupportingDocuments())
                 .verificationDeadline(request.getVerificationDeadline())
                 .location(request.getLocation())
+                .status(CampaignStatus.PENDING)
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -102,6 +104,7 @@ public class CampaignServiceImpl implements CampaignService {
                 .supportingDocuments(campaign.getSupportingDocuments())
                 .verificationDeadline(campaign.getVerificationDeadline())
                 .location(campaign.getLocation())
+                .status(campaign.getStatus())
                 .createdAt(campaign.getCreatedAt())
                 .build();
     }

@@ -1,5 +1,6 @@
 package com.spider.backend.dto;
 
+import com.spider.backend.model.CampaignStatus;
 import lombok.*;
 
 import java.time.LocalDate;

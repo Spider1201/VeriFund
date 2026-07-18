@@ -1,5 +1,7 @@
 package com.spider.backend.model;
 
+import com.spider.backend.model.CampaignStatus;
+
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -42,4 +44,6 @@ public class Campaign {
     private String location;
 
     private LocalDateTime createdAt;
+
+    private CampaignStatus status;
 }
