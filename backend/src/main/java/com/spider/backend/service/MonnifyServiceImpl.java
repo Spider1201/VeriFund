@@ -98,4 +98,9 @@ public class MonnifyServiceImpl implements MonnifyService {
 
         return paymentResponse;
     }
+
+    @Override
+    public VerifyPaymentResponse verifyPayment(String transactionReference) {
+        return null;
+    }
 }

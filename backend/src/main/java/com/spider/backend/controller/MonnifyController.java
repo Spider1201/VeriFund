@@ -3,6 +3,7 @@ package com.spider.backend.controller;
 import com.spider.backend.dto.InitializePaymentRequest;
 import com.spider.backend.dto.InitializePaymentResponse;
 import com.spider.backend.dto.MonnifyTokenResponse;
+import com.spider.backend.dto.VerifyPaymentResponse;
 import com.spider.backend.service.MonnifyService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,5 +28,12 @@ public class MonnifyController {
 
         return monnifyService.initializePayment(request);
 
+    }
+
+    @GetMapping("/verify/{transactionReference}")
+    public VerifyPaymentResponse verifyPayment(
+            @PathVariable String transactionReference) {
+
+        return monnifyService.verifyPayment(transactionReference);
     }
 }
