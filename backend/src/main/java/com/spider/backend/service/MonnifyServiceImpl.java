@@ -99,8 +99,54 @@ public class MonnifyServiceImpl implements MonnifyService {
         return paymentResponse;
     }
 
-    @Override
-    public VerifyPaymentResponse verifyPayment(String transactionReference) {
-        return null;
+        @Override
+        public VerifyPaymentResponse verifyPayment(String transactionReference) {
+
+            MonnifyTokenResponse tokenResponse = getAccessToken();
+
+            String accessToken = tokenResponse
+                    .getResponseBody()
+                    .getAccessToken();
+
+            MonnifyVerifyPaymentResponse response = webClient
+                    .get()
+                    .uri(uriBuilder -> uriBuilder
+                            .scheme("https")
+                            .host("sandbox.monnify.com")
+                            .path("/api/v2/merchant/transactions/query")
+                            .queryParam("transactionReference", transactionReference)
+                            .build())
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                    .retrieve()
+                    .bodyToMono(MonnifyVerifyPaymentResponse.class)
+                    .block();
+
+            if (response == null || response.getResponseBody() == null) {
+                throw new RuntimeException("Unable to verify payment.");
+            }
+
+            VerifyPaymentResponse verifyResponse = new VerifyPaymentResponse();
+
+            verifyResponse.setPaid(
+                    "PAID".equalsIgnoreCase(response.getResponseBody().getPaymentStatus())
+            );
+
+            verifyResponse.setPaymentStatus(
+                    response.getResponseBody().getPaymentStatus()
+            );
+
+            verifyResponse.setAmountPaid(
+                    response.getResponseBody().getAmountPaid()
+            );
+
+            verifyResponse.setPaymentReference(
+                    response.getResponseBody().getPaymentReference()
+            );
+
+            verifyResponse.setTransactionReference(
+                    response.getResponseBody().getTransactionReference()
+            );
+
+            return verifyResponse;
+        }
     }
-}
