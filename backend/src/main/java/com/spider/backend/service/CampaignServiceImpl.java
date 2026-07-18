@@ -84,6 +84,30 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    public CampaignResponse approveCampaign(String id) {
+        Campaign campaign = campaignRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Campaign not found"));
+
+        campaign.setStatus(CampaignStatus.APPROVED);
+
+        Campaign savedCampaign = campaignRepository.save(campaign);
+
+        return mapToResponse(savedCampaign);
+    }
+
+    @Override
+    public CampaignResponse rejectCampaign(String id) {
+        Campaign campaign = campaignRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Campaign not found"));
+
+        campaign.setStatus(CampaignStatus.REJECTED);
+
+        Campaign savedCampaign = campaignRepository.save(campaign);
+
+        return mapToResponse(savedCampaign);
+    }
+
+    @Override
     public void deleteCampaign(String id) {
 
         campaignRepository.deleteById(id);

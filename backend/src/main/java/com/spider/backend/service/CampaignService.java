@@ -16,5 +16,9 @@ public interface CampaignService {
 
     CampaignResponse updateCampaign(String id, CreateCampaignRequest request);
 
+    CampaignResponse approveCampaign(String id);
+
+    CampaignResponse rejectCampaign(String id);
+
     void deleteCampaign(String id);
 }
