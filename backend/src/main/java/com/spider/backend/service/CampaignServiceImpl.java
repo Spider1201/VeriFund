@@ -3,6 +3,7 @@ package com.spider.backend.service;
 import com.spider.backend.dto.CampaignResponse;
 import com.spider.backend.dto.CreateCampaignRequest;
 import com.spider.backend.model.Campaign;
+import com.spider.backend.model.CampaignStatus;
 import com.spider.backend.repository.CampaignRepository;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,7 @@ public class CampaignServiceImpl implements CampaignService {
                 .supportingDocuments(request.getSupportingDocuments())
                 .verificationDeadline(request.getVerificationDeadline())
                 .location(request.getLocation())
+                .status(CampaignStatus.PENDING)
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -82,6 +84,30 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    public CampaignResponse approveCampaign(String id) {
+        Campaign campaign = campaignRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Campaign not found"));
+
+        campaign.setStatus(CampaignStatus.APPROVED);
+
+        Campaign savedCampaign = campaignRepository.save(campaign);
+
+        return mapToResponse(savedCampaign);
+    }
+
+    @Override
+    public CampaignResponse rejectCampaign(String id) {
+        Campaign campaign = campaignRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Campaign not found"));
+
+        campaign.setStatus(CampaignStatus.REJECTED);
+
+        Campaign savedCampaign = campaignRepository.save(campaign);
+
+        return mapToResponse(savedCampaign);
+    }
+
+    @Override
     public void deleteCampaign(String id) {
 
         campaignRepository.deleteById(id);
@@ -102,6 +128,7 @@ public class CampaignServiceImpl implements CampaignService {
                 .supportingDocuments(campaign.getSupportingDocuments())
                 .verificationDeadline(campaign.getVerificationDeadline())
                 .location(campaign.getLocation())
+                .status(campaign.getStatus())
                 .createdAt(campaign.getCreatedAt())
                 .build();
     }

@@ -1,5 +1,6 @@
 package com.spider.backend.dto;
 
+import com.spider.backend.model.CampaignStatus;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -36,6 +37,8 @@ public class CampaignResponse {
     private LocalDate verificationDeadline;
 
     private String location;
+
+    private CampaignStatus status;
 
     private LocalDateTime createdAt;
 }

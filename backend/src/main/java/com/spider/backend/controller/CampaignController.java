@@ -51,4 +51,14 @@ public class CampaignController {
 
         campaignService.deleteCampaign(id);
     }
+
+    @PutMapping("/{id}/approve")
+    public CampaignResponse approveCampaign(@PathVariable String id) {
+        return campaignService.approveCampaign(id);
+    }
+
+    @PutMapping("/{id}/reject")
+    public CampaignResponse rejectCampaign(@PathVariable String id) {
+        return campaignService.rejectCampaign(id);
+    }
 }
