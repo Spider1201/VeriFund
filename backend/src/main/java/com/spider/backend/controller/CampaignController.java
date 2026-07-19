@@ -6,9 +6,11 @@ import com.spider.backend.service.CampaignService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/api/campaigns")
+@SecurityRequirement(name = "Bearer Authentication")
 public class CampaignController {
 
     private final CampaignService campaignService;
