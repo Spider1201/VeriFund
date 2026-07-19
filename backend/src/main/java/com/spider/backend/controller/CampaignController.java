@@ -4,6 +4,8 @@ import com.spider.backend.dto.CampaignResponse;
 import com.spider.backend.dto.CreateCampaignRequest;
 import com.spider.backend.service.CampaignService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -54,13 +56,20 @@ public class CampaignController {
         campaignService.deleteCampaign(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/approve")
     public CampaignResponse approveCampaign(@PathVariable String id) {
         return campaignService.approveCampaign(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/reject")
     public CampaignResponse rejectCampaign(@PathVariable String id) {
         return campaignService.rejectCampaign(id);
+    }
+
+    @GetMapping("/me")
+    public Object me(Authentication authentication) {
+        return authentication.getAuthorities();
     }
 }
