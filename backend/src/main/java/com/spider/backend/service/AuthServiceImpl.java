@@ -76,5 +76,6 @@ public class AuthServiceImpl implements AuthService {
                 .lastName(user.getLastName())
                 .role(user.getRole().name())
                 .build();
+
     }
 }
