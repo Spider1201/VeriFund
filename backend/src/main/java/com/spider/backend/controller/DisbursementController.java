@@ -30,9 +30,4 @@ public class DisbursementController {
                 request
         );
     }
-    @GetMapping("/test-admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String testAdmin() {
-        return "ADMIN OK";
-    }
 }
