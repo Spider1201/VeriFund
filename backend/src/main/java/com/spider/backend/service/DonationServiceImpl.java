@@ -68,15 +68,17 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public VerifyPaymentResponse verifyDonationPayment(String transactionReference) {
-
-        VerifyPaymentResponse response =
-                monnifyService.verifyPayment(transactionReference);
+    public VerifyPaymentResponse verifyDonationPayment(String paymentReference) {
 
         Donation donation = donationRepository
-                .findByTransactionReference(transactionReference)
+                .findByPaymentReference(paymentReference)
                 .orElseThrow(() ->
                         new RuntimeException("Donation not found"));
+
+        VerifyPaymentResponse response =
+                monnifyService.verifyPayment(
+                        donation.getTransactionReference()
+                );
 
         if (response.isPaid()
                 && donation.getPaymentStatus() == PaymentStatus.PENDING) {

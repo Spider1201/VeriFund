@@ -12,4 +12,6 @@ public interface DonationRepository extends MongoRepository<Donation, String> {
 
     Optional<Donation> findByTransactionReference(String transactionReference);
 
+    Optional<Donation> findByPaymentReference(String paymentReference);
+
 }

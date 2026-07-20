@@ -40,7 +40,7 @@ public class DonationController {
         return donationService.getCampaignDonations(campaignId);
     }
 
-    @GetMapping("/verify/{transactionReference}")
+    @GetMapping("/verify/{paymentReference}")
     public VerifyPaymentResponse verifyPayment(
             @PathVariable String transactionReference) {
 
