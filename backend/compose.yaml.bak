@@ -1,4 +1,4 @@
-services:
+ervices:
   mongodb:
     image: 'mongo:latest'
     environment:
