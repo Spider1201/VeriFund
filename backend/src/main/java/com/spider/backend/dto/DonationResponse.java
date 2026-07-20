@@ -25,4 +25,8 @@ public class DonationResponse {
     private PaymentStatus paymentStatus;
 
     private LocalDateTime createdAt;
+
+    private String checkoutUrl;
+
+    private String transactionReference;
 }
