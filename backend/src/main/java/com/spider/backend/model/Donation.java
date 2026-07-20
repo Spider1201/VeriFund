@@ -27,6 +27,8 @@ public class Donation {
 
     private String paymentReference;
 
+    private String transactionReference;
+
     private PaymentStatus paymentStatus;
 
     private LocalDateTime createdAt;
