@@ -58,7 +58,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/donations/**")
                         .permitAll()
 
-                        .requestMatchers(HttpMethod.GET, "/api/donations/verify")
+                        .requestMatchers(HttpMethod.GET, "/api/donations/verify/**")
                         .permitAll()
 
                         .anyRequest().authenticated()
