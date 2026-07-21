@@ -55,6 +55,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/campaigns/**")
                         .permitAll()
 
+                        .requestMatchers(HttpMethod.POST, "/api/donations/**")
+                        .permitAll()
+
+                        .requestMatchers(HttpMethod.GET, "/api/donations/verify")
+                        .permitAll()
+
                         .anyRequest().authenticated()
                 )
 
