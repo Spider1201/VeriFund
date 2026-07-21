@@ -162,6 +162,14 @@ This project was built for the **APIConf Lagos 2026 x Monnify Developer Challeng
 
 For bugs or feature requests, please open an **issue** first.
 
+## 🔭 Future Improvements
+
+- Automated test coverage (backend and frontend)
+- CI/CD pipeline for automated build and deploy on push
+- Webhook-based payment confirmation (replacing manual verification checks)
+- Email notifications for campaign approval, rejection, and successful donations
+- Admin-facing analytics dashboard
+
 ## 📄 License
 
 Licensed under the **MIT License**. See [LICENSE](./LICENSE) for details.
