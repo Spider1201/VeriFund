@@ -42,9 +42,9 @@ public class DonationController {
 
     @GetMapping("/verify/{paymentReference}")
     public VerifyPaymentResponse verifyPayment(
-            @PathVariable String transactionReference) {
+            @PathVariable String paymentReference) {
 
-        return donationService.verifyDonationPayment(transactionReference);
+        return donationService.verifyDonationPayment(paymentReference);
     }
 
     // Admin: Get all donations
